@@ -7,11 +7,23 @@ class ProgramWindow
     public $width;
     public $height;
 
-    function __construct($x, $y, $width, $height)
+    function __construct()
     {
-        $this->$x = null;
-        $this->$y = null;
-        $this->$width = null;
-        $this->$height = null;
+        $this->x = 0;
+        $this->y = 0;
+        $this->width = 800;
+        $this->height = 600;
+    }
+
+    function resize($size)
+    {
+        $this->width = $size->width;
+        $this->height = $size->height;
+    }
+
+    function move($position)
+    {
+        $this->x = $position->x;
+        $this->y = $position->y;
     }
 }
