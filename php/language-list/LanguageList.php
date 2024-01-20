@@ -1,27 +1,28 @@
 <?php
 
-function language_list(...$array)
+function language_list(...$list)
 {
-    foreach ($array as $a)
-    {
-        $b[] = $a;
-    }
-    return $b;
+    return $list;
 }
 
-function add_to_language_list($array, $newLanguage)
+function add_to_language_list($list, $language)
 {
-    $array[] = $newLanguage;
-    language_list($array);
-    return $newLanguage;
+    $list[] = $language;
+    return $list;
 }
 
-function prune_language_list($language)
+function prune_language_list($list)
 {
-    return language_list(array_shift($language));
+    array_shift($list);
+    return $list;
 }
 
-function current_language($element)
+function current_language($list)
 {
-    
+    return $list[0];
+}
+
+function language_list_length($list)
+{
+    return count($list);
 }
