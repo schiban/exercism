@@ -43,10 +43,5 @@ function getAllColors(): array
 
 function colorCode(string $color): int
 {
-    $array = getAllColors();
-
-    for ($i = 0; $i < count($array); $i++)
-    {
-        if ($color == $array[$i]) return $i;
-    }
+    return array_search($color, getAllColors());
 }
