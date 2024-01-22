@@ -38,6 +38,7 @@ function getAllColors(): array
         'grey',
         'white',
     ];
+    
     return $array;
 }
 
