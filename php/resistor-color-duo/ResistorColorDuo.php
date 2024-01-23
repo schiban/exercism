@@ -41,6 +41,10 @@ class ResistorColorDuo
             'white',
         ];
 
-        return array_search($colors, $array);
+        $color[0] = array_search($colors[0], $array);
+        $color[1] = array_search($colors[1], $array);
+
+
+        return (int) $color;
     }
 }
