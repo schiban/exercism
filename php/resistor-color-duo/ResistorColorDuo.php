@@ -44,7 +44,6 @@ class ResistorColorDuo
         $color[0] = array_search($colors[0], $array);
         $color[1] = array_search($colors[1], $array);
 
-
-        return (int) $color;
+        return (int) implode("", $color);
     }
 }
