@@ -26,8 +26,40 @@ declare(strict_types=1);
 
 class Proverb
 {
-    public function recite()
+    function recite(array $words) : array
     {
-        throw new \BadMethodCallException(sprintf('Implement the %s method', __FUNCTION__));
+        $proverb = [];
+
+        if (count($words) === 0) return $proverb;
+    
+        for($i = 0; $i < count($words) - 1; $i++)
+        {
+            $proverb[] = "For want of a $words[$i] the ".$words[$i+1]." was lost.";
+        }
+    
+        $proverb[] = "And all for the want of a $words[0].";
+        
+        return $proverb;
     }
 }
+
+// function recite(array $words) : array
+// {
+//     $proverb = [];
+
+//     if (count($words) === 0) return $proverb;
+
+//     for($i = 0; $i < count($words) - 1; $i++)
+//     {
+//         $proverb[] = "For want of a $words[$i] the ".$words[$i+1]." was lost.";
+//     }
+
+//     $proverb[] = "And all for the want of a $words[0].";
+    
+//     return $proverb;
+// }
+
+// $word = ["nail"];
+// $words = ["nail", "shoe", "horse", "rider", "message", "battle", "kingdom"];
+
+// print_r(recite($words));
