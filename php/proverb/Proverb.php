@@ -30,14 +30,14 @@ class Proverb
     {
         $proverb = [];
 
-        if (count($words) === 0) return $proverb;
+        if ($words === $proverb) return $proverb;
     
         for($i = 0; $i < count($words) - 1; $i++)
         {
-            $proverb[] = "For want of a $words[$i] the ".$words[$i+1]." was lost.";
+            $proverb[] = 'For want of a '.$words[$i].' the '.$words[$i+1].' was lost.';
         }
     
-        $proverb[] = "And all for the want of a $words[0].";
+        $proverb[] = 'And all for the want of a '.$words[0].'.';
         
         return $proverb;
     }
