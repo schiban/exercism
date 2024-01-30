@@ -38,15 +38,9 @@ class Tournament
     public function addPoints(string $team, int $points)
     {
         if (!array_key_exists($team, $this->result)) {
-            $this->result[$team] = [
-                'team' => $team, 
-                'MP' => 0,
-                'W' => 0,
-                'D' => 0,
-                'L' => 0,
-                'P' => 0
-            ];
+            $this->result[$team] = ['team' => $team, 'MP' => 0,'W' => 0,'D' => 0,'L' => 0,'P' => 0];
         }
+        
         $this->result[$team]['MP']++;
         $this->result[$team]['P'] += $points;
         $this->result[$team]['W'] += $points == 3 ? 1 : 0;
