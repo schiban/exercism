@@ -26,23 +26,56 @@ declare(strict_types=1);
 
 class Tournament
 {
-    public $team1;
-    public $team2;
+    public $output;
     public $result;
 
     public function __construct()
     {
-        $this->team1 = '';
-        $this->team2 = '';
-        $this->result = '';
+        $this->output = "Team                           | MP |  W |  D |  L |  P";
+        $this->result = [];
     }
 
-    function tally($match)
+    public function addPoints(string $team, int $points)
     {
-        $this->team1 = $match->team1;
-        $this->team2 = $match->team2;
-        $this->result = $match->result;
+        if (!array_key_exists($team, $this->result)) {
+            $this->result[$team] = [
+                'team' => $team, 
+                'MP' => 0,
+                'W' => 0,
+                'D' => 0,
+                'L' => 0,
+                'P' => 0
+            ];
+        }
+        $this->result[$team]['MP']++;
+        $this->result[$team]['P'] += $points;
+        $this->result[$team]['W'] += $points == 3 ? 1 : 0;
+        $this->result[$team]['D'] += $points == 1 ? 1 : 0;
+        $this->result[$team]['L'] += $points == 0 ? 1 : 0;
+    }
 
+    public function manageScore($score)
+    {
+        $score = explode(';', $score);
         
+        if (sizeof($score) != 3) return;
+        $this->addPoints($score[0], [3,1,0][array_search($score[2], ['win','draw','loss'])]);
+        $this->addPoints($score[1], [0,1,3][array_search($score[2], ['win','draw','loss'])]);
+    }
+
+    public function tally(string $input)
+    {
+        $scores = explode("\n", $input);
+
+        array_walk($scores, [$this, 'manageScore']);
+            
+        uasort($this->result, function ($a, $b) {
+            return $a['P'] == $b['P'] ? $a['team'] > $b['team'] : $a['P'] < $b['P'];
+        });
+        array_walk($this->result, function ($result) {
+            $team = str_pad($result['team'], 31, ' ');
+            $this->output .= "\n{$team}|  {$result['MP']} |  {$result['W']} |  {$result['D']} |  {$result['L']} |  {$result['P']}";
+        });
+        return $this->output;
     }
 }
