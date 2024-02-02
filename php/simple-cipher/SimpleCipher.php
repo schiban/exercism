@@ -26,91 +26,43 @@ declare(strict_types=1);
 
 class SimpleCipher
 {
-    public const ALPHABETH = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-
     public $key;
-
-    function __construct(string $key)
+    public function __construct(string $key = null)
     {
-        $this->key = $key;
-
-        if(ctype_alpha($this->key) && ctype_lower($this->key))
-        {
-            if (str_contains($this->key, 'a'))
-            {
-                $this->key = 0;
-            }
-            else if (str_contains($this->key, 'd'))
-            {
-                $this->key = 3;
-            }
-            else
-            {
-                $this->key = 0;
-            }
+        if (isset($key) && (!ctype_alpha($key) || $key !== strtolower($key))) {
+            throw new InvalidArgumentException();
         }
-        else
-        {
-            throw new Exception("Please insert only letters from a-z");
-        }
+        $this->key = $key ?? $this->keyGen();
     }
-
+    private function keyGen(): string
+    {
+        $key = '';
+        for($i = 0; $i < 100; $i++)
+        {
+            $key .=  chr(rand(ord('a'), ord('z')));
+        }
+        return $key;
+    }
     public function encode(string $plainText): string
     {
-        if(ctype_alpha($plainText) && ctype_lower($plainText))
+        $string = '';
+        foreach(str_split($plainText) as $i => $character)
         {
-            $characters = str_split($plainText);
-            $string = '';
-            for ($i=0; $i < count($characters); $i++)
-            {
-                $keys = (array_search($characters[$i], self::ALPHABETH)) + $this->key;
-                if ($keys >= 26)
-                {
-                    $string .= self::ALPHABETH[$keys-count(self::ALPHABETH)];
-                }
-                else
-                {
-                    $string .= self::ALPHABETH[$keys];
-                }
-            }
-            return $string;
+            $key = ord($this->key[$i % strlen($this->key)]) - ord('a');
+            $string .= chr((ord($character) - ord('a') + $key) % 26 + ord('a'));
         }
-        else
-        {
-            throw new Exception("Please insert only letters from a-z");
-        }
+        return $string;
     }
-
-    
-
     public function decode(string $cipherText): string
     {
-        if(ctype_alpha($cipherText) && ctype_lower($cipherText))
-        {    
-            $characters = str_split($cipherText);
-            $string = '';
-            for ($i=0; $i < count($characters); $i++)
-            {
-                $key = (array_search($characters[$i], self::ALPHABETH)) - $this->key;
-                if ($key <= -1)
-                {
-                    $string .= self::ALPHABETH[$key+count(self::ALPHABETH)];
-                }
-                else
-                {
-                    $string .= self::ALPHABETH[$key];
-                }
-            }
-            return $string;
+        $string = '';
+        foreach (str_split($cipherText) as $i => $character) {
+            $key = ord($this->key[$i % strlen($this->key)]) - ord('a');
+            $string .= chr((ord($character) - ord('a') - $key + 26) % 26 + ord('a'));
         }
-        else
-        {
-            throw new Exception("Please insert only letters from a-z");
-        }
+        return $string;
     }
 }
 
-
-$stuff = new SimpleCipher('ddddddd');
-
+$stuff = new SimpleCipher('zzzz');
 echo $stuff->encode('iamapandabear');
