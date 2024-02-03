@@ -26,38 +26,18 @@ declare(strict_types=1);
 
 class HighScores
 {
-    // Your task is to build a high-score component of the classic Frogger game, one of the highest selling and addictive games of all time, and a classic of the arcade era. Your task is to write methods that return the highest score from the list, the last added score and the three highest scores.
     public $scores;
-    public $personalBest;
     public $latest;
+    public $personalBest; 
     public $personalTopThree;
 
     public function __construct(array $scores)
     {
-        $this->scores = $scores;
-        $this->personalBest = $this->personalBest();
-        $this->latest = $this->latest();
-        $this->personalTopThree = $this->personalTopThree();
-    }
+        $this->scores = $scores;    
+        $this->personalBest = max($scores);
+        $this->latest = end($scores);
 
-    public function personalBest()
-    {       
-        return min($this->scores);
-    }
-
-    public function latest()
-    {
-        return end($this->scores);
-    }
-
-    public function personalTopThree()
-    {
-        rsort($this->scores);
-        $scores = [$this->scores[0], $this->scores[1], $this->scores[2]];
-        return $scores;
+        rsort($scores);
+        $this->personalTopThree = array_slice($scores, 0, 3);
     }
 }
-
-$teste = new HighScores([100, 110, 40, 30, 10, 92, 12]);
-
-print_r($teste->highestThreeScores());
