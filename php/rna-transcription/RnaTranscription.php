@@ -26,24 +26,5 @@ declare(strict_types=1);
 
 function toRna(string $dna): string
 {
-    $str = "";
-    for($i = 0; $i < strlen($dna); $i++)
-    {
-        switch ($dna[$i])
-        {
-            case "C":
-                $str .= "G";
-                break;
-            case "G":
-                $str .= "C";
-                break;
-            case "T":
-                $str .= "A";
-                break;
-            case "A":
-                $str .= "U";
-                break;
-        }
-    }
-    return $str;
+    return strtr($dna, 'GCTA', 'CGAU');
 }
