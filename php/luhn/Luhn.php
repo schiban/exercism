@@ -26,5 +26,21 @@ declare(strict_types=1);
 
 function isValid(string $number): bool
 {
-    throw new \BadFunctionCallException("Implement the isValid function");
+    if(ctype_alpha($number)) return false;
+    if(strlen($number) <= 1) return false;
+    $number = str_replace(' ', '', $number);
+    $number = strrev($number);
+    $newNumber = 0;
+    $sum = 0;
+    for($i = 0; $i < strlen($number); $i++)
+    {
+        if($i%2!=0)
+            $newNumber = (int) $number[$i]*2 > 9 ? (int) $number[$i]*2 - 9 : (int) $number[$i]*2;
+        else
+            $newNumber = $number[$i];
+        $sum += $newNumber;
+    }
+    return $sum % 10 == 0 ? true : false;
 }
+
+var_dump(isValid(" 5 9 "));
