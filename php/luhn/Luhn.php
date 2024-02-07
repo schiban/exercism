@@ -26,9 +26,8 @@ declare(strict_types=1);
 
 function isValid(string $number): bool
 {
-    if(ctype_alpha($number)) return false;
-    if(strlen($number) <= 1) return false;
-    $number = str_replace(' ', '', $number);
+    $number = preg_replace('/\s+/', '', $number);
+    if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $number) || preg_match("/[a-z]/i", $number) || strlen($number) <= 1) return false;
     $number = strrev($number);
     $newNumber = 0;
     $sum = 0;
@@ -43,4 +42,4 @@ function isValid(string $number): bool
     return $sum % 10 == 0 ? true : false;
 }
 
-var_dump(isValid(" 5 9 "));
+var_dump(isValid(" 5 9a "));
