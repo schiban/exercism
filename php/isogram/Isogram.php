@@ -26,5 +26,10 @@ declare(strict_types=1);
 
 function isIsogram(string $word): bool
 {
-    throw new \BadFunctionCallException("Implement the isIsogram function");
+    $word = str_replace(['-', ' '], '', mb_strtolower($word));
+    $word = mb_str_split($word);
+    
+    return empty(array_diff_key($word, array_unique($word)));
 }
+
+var_dump(isIsogram("Heizölrückstoßabdämpfung"));
