@@ -28,6 +28,26 @@ class ResistorColorTrio
 {
     public function label(): string
     {
-        throw new \BadMethodCallException(sprintf('Implement the %s method', __FUNCTION__));
+        $array = [
+            'black',
+            'brown',
+            'red',
+            'orange',
+            'yellow',
+            'green',
+            'blue',
+            'violet',
+            'grey',
+            'white',
+        ];
+
+        // $color[0] = array_search($colors[0], $array);
+        // $color[1] = array_search($colors[1], $array);
+
+        // return (int) implode("", $color);
+        return (string) $this;
     }
 }
+$test = new ResistorColorTrio();
+
+print_r($test->label("aaaa"));
