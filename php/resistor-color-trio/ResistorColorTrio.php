@@ -26,7 +26,7 @@ declare(strict_types=1);
 
 class ResistorColorTrio
 {
-    public function label(): string
+    public function label(array $colors): string
     {
         $array = [
             'black',
@@ -41,13 +41,42 @@ class ResistorColorTrio
             'white',
         ];
 
-        // $color[0] = array_search($colors[0], $array);
-        // $color[1] = array_search($colors[1], $array);
+        $color[0] = array_search($colors[0], $array);
+        $color[1] = array_search($colors[1], $array);
+        $final = implode("", $color);
 
-        // return (int) implode("", $color);
-        return (string) $this;
+        $color[2] = array_search($colors[2], $array);
+        for($i=1; $i <= $color[2]; $i++)
+        {
+            $final .= "0";
+        }
+        if($color[0] == 0 && $color[1]!= 0)
+        {
+            $final = substr($final, 1);
+        }
+        switch (true)
+        {
+            case ($color[0] == 0 && $color[1] == 0):
+                return "0 ohms";
+                break;
+            case ($color[2] < 2):
+                return "$final ohms"; 
+                break;
+            case ($color[2] <= 5):
+                $final = substr($final, 0, -3);
+                return "$final kiloohms";
+                break;
+            case ($color[2] <= 8):
+                $final = substr($final, 0, -6);
+                return "$final megaohms";
+                break;
+            default:
+                $final = substr($final, 0, -9);
+                return "$final gigaohms";
+                break;
+        }
     }
 }
 $test = new ResistorColorTrio();
 
-print_r($test->label("aaaa"));
+print_r($test->label(['red', 'black', 'red']));
