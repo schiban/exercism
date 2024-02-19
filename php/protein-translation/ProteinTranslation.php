@@ -26,72 +26,43 @@ declare(strict_types=1);
 
 class ProteinTranslation
 {
-    public function getProteins(string $condons)
+    public const CONDONS =
+    [
+        "AUG" => "Methionine",
+        "UUU" => "Phenylalanine",
+        "UUC" => "Phenylalanine",
+        "UUA" => "Leucine",
+        "UUG" => "Leucine",
+        "UCU" => "Serine",
+        "UCC" => "Serine",
+        "UCA" => "Serine",
+        "UCG" => "Serine",
+        "UAU" => "Tyrosine",
+        "UAC" => "Tyrosine",
+        "UGU" => "Cysteine",
+        "UGC" => "Cysteine",
+        "UGG" => "Tryptophan",
+        "UAA" => "STOP",
+        "UAG" => "STOP",
+        "UGA" => "STOP",
+    ];
+
+    public function getProteins(string $rna): array
     {
-        if(empty($condons)) return "Invalid codon";
-        $proteins = [
-            "Methionine"    => "AUG",
-            "Phenylalanine" => "UUUUUC",
-            "Leucine"       => "UUAUUG",
-            "Serine"        => "UCUUCCUCAUCG",
-            "Tyrosine"      => "UAUUAC",
-            "Cysteine"      => "UGUUGC",
-            "Tryptophan"    => "UGG",
-            "STOP"          => "UAAUAGUGA"
-        ];
-        $newString = "";
-        $newArray = "";
-
-        for($i=0;$i<strlen($condons);$i++)
-        {
-            if($i%3 == 0 && $i!=0)
-            {
-                if(($condons[$i].$condons[$i+1].$condons[$i+2]) == "UAA" || ($condons[$i].$condons[$i+1].$condons[$i+2]) == "UAG" || ($condons[$i].$condons[$i+1].$condons[$i+2]) == "UGA")
-                {
-                    $i = strlen($condons);
-                }
-                else
-                {
-                    $newArray .= "$condons[$i]";
-                }
-            }
-            else
-            {
-                $newArray .= "$condons[$i]";
-            }
-        }
-        // print_r($newArray);
-        // echo "\n";
-
         $translater = [];
 
-        if((string) $newArray != "")
+        foreach(str_split($rna, 3) as $value)
         {
-            foreach($proteins as $key => $value)
-            {
-                if((string) $newArray == $value)
-                {
-                    $translater[] = $key;
-                }
-            }
+            if(!in_array($value, array_keys(self::CONDONS)))
+                throw new InvalidArgumentException("Invalid codon");
+            if("STOP" === self::CONDONS[$value])
+                break;
+            $translater[] = self::CONDONS[$value];
         }
-        else
-        {
-            foreach($proteins as $key => $value)
-            {
-                if($condons == $value)
-                {
-                    $translater[] = $key;
-                }
-            }
-        }
-
-        if(empty($translater)) throw new InvalidArgumentException('Invalid codon');
-
         return $translater;
     }
 }
 
 $teste = new ProteinTranslation();
 
-print_r($teste->getProteins('AAA'));
+print_r($teste->getProteins('AUGAUG'));
