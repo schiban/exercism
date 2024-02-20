@@ -28,8 +28,13 @@ class Robot
 {
     public function getName(): string
     {
-        throw new \BadMethodCallException("Implement the getName method");
-
+        // The first time you turn on a robot, a random name is generated in the format of two uppercase letters followed by three digits, such as RX837 or BC811.
+        $name = strtoupper(chr(rand(ord('a'), ord('z'))));
+        $name .= strtoupper(chr(rand(ord('a'), ord('z'))));
+        $name .= rand(0,9);
+        $name .= rand(0,9);
+        $name .= rand(0,9);
+        return $name;
     }
 
     public function reset(): void
@@ -38,3 +43,6 @@ class Robot
         
     }
 }
+
+$teste = new Robot();
+print($teste->getName());
