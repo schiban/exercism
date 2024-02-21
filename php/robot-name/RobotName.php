@@ -26,21 +26,22 @@ declare(strict_types=1);
 
 class Robot
 {
+    public $name;
+
     public function getName(): string
     {
-        // The first time you turn on a robot, a random name is generated in the format of two uppercase letters followed by three digits, such as RX837 or BC811.
-        $name = strtoupper(chr(rand(ord('a'), ord('z'))));
-        $name .= strtoupper(chr(rand(ord('a'), ord('z'))));
-        $name .= rand(0,9);
-        $name .= rand(0,9);
-        $name .= rand(0,9);
-        return $name;
+        return $this->name;
     }
 
-    public function reset(): void
+    public function reset(): // void
     {
-        throw new \BadMethodCallException("Implement the reset method");
-        
+        $name = strtoupper(chr(rand(ord('a'), ord('z'))));
+        $name .= strtoupper(chr(rand(ord('a'), ord('z'))));
+        $name .= rand(0, 9);
+        $name .= rand(0, 9);
+        $name .= rand(0, 9);
+
+        return true;
     }
 }
 
