@@ -33,15 +33,11 @@ class Robot
         return $this->name;
     }
 
-    public function reset(): // void
+    public function reset(): void
     {
-        $name = strtoupper(chr(rand(ord('a'), ord('z'))));
-        $name .= strtoupper(chr(rand(ord('a'), ord('z'))));
-        $name .= rand(0, 9);
-        $name .= rand(0, 9);
-        $name .= rand(0, 9);
-
-        return true;
+        $this->name = strtoupper(chr(rand(ord('A'), ord('Z'))));
+        $this->name .= strtoupper(chr(rand(ord('A'), ord('z'))));
+        $this->name .= rand(100, 999);
     }
 }
 
