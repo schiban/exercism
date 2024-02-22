@@ -26,15 +26,24 @@ declare(strict_types=1);
 
 class Robot
 {
+    public $name;
+
     public function getName(): string
     {
-        throw new \BadMethodCallException("Implement the getName method");
-
+        return $this->name;
     }
 
-    public function reset(): void
+    public function reset(): // void
     {
-        throw new \BadMethodCallException("Implement the reset method");
-        
+        $name = strtoupper(chr(rand(ord('a'), ord('z'))));
+        $name .= strtoupper(chr(rand(ord('a'), ord('z'))));
+        $name .= rand(0, 9);
+        $name .= rand(0, 9);
+        $name .= rand(0, 9);
+
+        return true;
     }
 }
+
+$teste = new Robot();
+print($teste->getName());
