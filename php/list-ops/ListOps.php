@@ -24,11 +24,21 @@
 
 declare(strict_types=1);
 
+$arr1 = ["João", "Bandeira"];
+$arr2 = ["Marta", "Guedes"];
+
+$teste = new ListOps();
+print_r($teste->append($arr1, $arr2));
+
 class ListOps
 {
     public function append(array $list1, array $list2): array
     {
-        throw new \BadMethodCallException("Implement the append function");
+        for($i=0;$i<count($list2);$i++)
+        {
+            $list1[] = $list2[$i];
+        }
+        return $list1;
     }
 
     public function concat(array $list1, array ...$listn): array
