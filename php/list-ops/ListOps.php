@@ -28,7 +28,7 @@ $arr1 = ["João", "Bandeira"];
 $arr2 = ["Marta", "Guedes"];
 
 $teste = new ListOps();
-print_r($teste->append($arr1, $arr2));
+print_r($teste->concat($arr1, $arr2, $arr2, $arr2));
 
 class ListOps
 {
@@ -43,7 +43,16 @@ class ListOps
 
     public function concat(array $list1, array ...$listn): array
     {
-        throw new \BadMethodCallException("Implement the concat function");
+        $listResult = [];
+        foreach($listn as $list)
+        {
+            for($i=0;$i<count($list);$i++)
+            {
+                $listResult[] = $list[$i];
+            }
+        }
+        
+        return $this->append($list1, $listResult);
     }
 
     /**
