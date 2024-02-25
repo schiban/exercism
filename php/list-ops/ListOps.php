@@ -26,9 +26,13 @@ declare(strict_types=1);
 
 $arr1 = ["João", "Bandeira"];
 $arr2 = ["Marta", "Guedes"];
+$arr3 = ["João", "Marcos", "da", "Costa", "Moreira", "Bandeira"];
+$predicate = "Moreira";
 
 $teste = new ListOps();
-print_r($teste->concat($arr1, $arr2, $arr2, $arr2));
+//print_r($teste->append($arr1, $arr2));
+//print_r($teste->concat($arr1, $arr2, $arr2, $arr2));
+print_r($teste->filter($predicate, $arr3));
 
 class ListOps
 {
@@ -60,7 +64,10 @@ class ListOps
      */
     public function filter(callable $predicate, array $list): array
     {
-        throw new \BadMethodCallException("Implement the filter function");
+        for($i=0;$i<count($list);$i++)
+        {
+            if($predicate == $list[$i]) return $list[$i];
+        }
     }
 
     public function length(array $list): int
