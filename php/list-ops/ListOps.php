@@ -28,7 +28,8 @@ class ListOps
 {
     public function append(array $list1, array $list2): array
     {
-        throw new \BadMethodCallException("Implement the append function");
+        $list1[] = $list2;
+        return $list1;
     }
 
     public function concat(array $list1, array ...$listn): array
