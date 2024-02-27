@@ -26,8 +26,26 @@ declare(strict_types=1);
 
 function acronym(string $text): string
 {
-    for($i=0; $i<strlen($text); $i++)
+
+    $words = preg_split("/[\s,:_-]+/", $text);
+    $acronym = "";
+    if(count($words) <= 1) return $acronym;
+
+    foreach($words as $word)
     {
-        if($text)
+        $letters = mb_str_split($word);
+        $acronym .= mb_strtoupper(array_shift($letters));
+
+        $previousLetter = true;
+        foreach($letters as $letter)
+        {
+            $currentLetter = (mb_strtoupper($letter) === $letter);
+            if($currentLetter && !$previousLetter) $acronym .= $letter;
+            $previousLetter = $currentLetter;
+        }
     }
+
+    return $acronym;
 }
+
+print(acronym("PHP: Hypertext Preprocessor"));
