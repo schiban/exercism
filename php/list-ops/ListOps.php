@@ -24,39 +24,16 @@
 
 declare(strict_types=1);
 
-$arr1 = ["João", "Bandeira"];
-$arr2 = ["Marta", "Guedes"];
-$arr3 = ["João", "Marcos", "da", "Costa", "Moreira", "Bandeira"];
-$predicate = "Moreira";
-
-$teste = new ListOps();
-//print_r($teste->append($arr1, $arr2));
-//print_r($teste->concat($arr1, $arr2, $arr2, $arr2));
-print_r($teste->filter($predicate, $arr3));
-
 class ListOps
 {
     public function append(array $list1, array $list2): array
     {
-        for($i=0;$i<count($list2);$i++)
-        {
-            $list1[] = $list2[$i];
-        }
-        return $list1;
+        return array_merge($list1, $list2);
     }
 
     public function concat(array $list1, array ...$listn): array
     {
-        $listResult = [];
-        foreach($listn as $list)
-        {
-            for($i=0;$i<count($list);$i++)
-            {
-                $listResult[] = $list[$i];
-            }
-        }
-        
-        return $this->append($list1, $listResult);
+        return array_merge($list1, ...$listn);
     }
 
     /**
@@ -64,15 +41,12 @@ class ListOps
      */
     public function filter(callable $predicate, array $list): array
     {
-        for($i=0;$i<count($list);$i++)
-        {
-            if($predicate == $list[$i]) return $list[$i];
-        }
+        return array_values(array_filter($list, $predicate));
     }
 
     public function length(array $list): int
     {
-        throw new \BadMethodCallException("Implement the length function");
+        return count($list);
     }
 
     /**
@@ -80,7 +54,7 @@ class ListOps
      */
     public function map(callable $function, array $list): array
     {
-        throw new \BadMethodCallException("Implement the map function");
+        return array_map($function, $list);
     }
 
     /**
@@ -88,7 +62,7 @@ class ListOps
      */
     public function foldl(callable $function, array $list, $accumulator)
     {
-        throw new \BadMethodCallException("Implement the foldl function");
+        return array_reduce($list, $function, $accumulator);
     }
 
     /**
@@ -96,11 +70,11 @@ class ListOps
      */
     public function foldr(callable $function, array $list, $accumulator)
     {
-        throw new \BadMethodCallException("Implement the foldr function");
+        return $this->foldl($function, $this->reverse($list), $accumulator,);
     }
 
     public function reverse(array $list): array
     {
-        throw new \BadMethodCallException("Implement the reverse function");
+        return array_reverse($list);
     }
 }
